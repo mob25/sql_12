@@ -3,7 +3,6 @@
 Создайте функцию, которая принимает кол-во сек и формат их в кол-во дней часов.
 Пример: 123456 ->'1 days 10 hours 17 minutes 36 seconds ' */
 
-
 CREATE FUNCTION sec_to_day(seconds INT) 
 RETURNS VARCHAR(250)
 DETERMINISTIC
@@ -17,24 +16,19 @@ BEGIN
     SET days = seconds DIV 86400;
     SET seconds = seconds % 86400;
   END IF;
-
   IF seconds >= 3600 THEN
     SET hours = seconds DIV 3600;
     SET seconds = seconds % 3600; 
   END IF;
-
   IF seconds >= 60 THEN
     SET minutes = seconds DIV 60;
     SET seconds = seconds % 60;
   END IF;
-  
   SET result = CONCAT(
                     CAST(days AS CHAR), ' дней ',
                     CAST(hours AS CHAR), ' час ',
                     CAST(minutes AS CHAR), ' минут ');
-
   SET result = CONCAT(result, CAST(seconds AS CHAR), ' сек.');
-  
   RETURN result;
 END;
 
@@ -46,20 +40,12 @@ END;
 
 */
 
-DELIMITER $$ 
-
 CREATE PROCEDURE even_numbers (IN count_number int, OUT result varchar(255))
 BEGIN
   DECLARE i int DEFAULT 2;
-
   SET result = '';
-
   WHILE i < count_number DO
     SET result = CONCAT(result, CAST(i AS char), ' '); 
     SET i = i + 2;
   END WHILE;
-
 END
-$$
-
-DELIMITER ;
